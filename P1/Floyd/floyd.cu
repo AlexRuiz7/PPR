@@ -30,16 +30,16 @@ void floydCPU(uint niters, uint nverts, int * A) {
 	// BUCLE PPAL DEL ALGORITMO
 	int inj, in, kn;
 	for(int k = 0; k < niters; k++) {
-          kn = k * nverts;
+    kn = k * nverts;
 	  for(int i=0;i<nverts;i++) {
 			in = i * nverts;
 			for(int j = 0; j < nverts; j++)
-	       			if (i!=j && i!=k && j!=k){
-			 	    inj = in + j;
-			 	    A[inj] = min(A[in+k] + A[kn+j], A[inj]);
-	       }
-	   }
-	}
+   			if (i!=j && i!=k && j!=k){
+          inj = in + j;
+		 	    A[inj] = min(A[in+k] + A[kn+j], A[inj]);
+        }
+	  }
+  }
 }
 
 //**************************************************************************//
@@ -68,9 +68,9 @@ __global__ void floyd2D(int * M, const uint nverts, const uint k) {
      int ij = i*nverts+j; 	// indice de la matriz
      int Mij = M[ij];
      if (i != j && i != k && j != k){
-			 uint Mikj = M[i*nverts+k] + M[k*nverts+j];
-			 Mij = (Mij > Mikj) ? Mikj : Mij;
-			 M[ij] = Mij;
+			uint Mikj = M[i*nverts+k] + M[k*nverts+j];
+			Mij = (Mij > Mikj) ? Mikj : Mij;
+			M[ij] = Mij;
      }
 	 }
 }
